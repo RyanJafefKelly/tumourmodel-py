@@ -1,0 +1,16 @@
+[project]
+name = "tumourmodel"
+version = "0.0.1"
+description = "Py bindings for the TumourModel"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Ryan Kelly" }]
+dependencies = []
+
+[build-system]
+requires = ["scikit-build-core>=0.10", "pybind11>=2.12", "numpy>=2"]
+build-backend = "scikit_build_core.build"
+
+[tool.scikit-build]
+wheel.packages = ["src/tumourmodel"]
+cmake.verbose = true
