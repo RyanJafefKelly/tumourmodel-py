@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 pybind11_add_module(_core
     src/tumourmodel/_core.cpp
     src/tumourmodel/cpp/Model.cpp
+    src/tumourmodel/cpp/Params_constants.cpp
 )
 
 install(TARGETS _core DESTINATION tumourmodel)

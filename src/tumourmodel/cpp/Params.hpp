@@ -23,9 +23,9 @@ public:
     double RandomDouble() { return uniform_random(generator); }
     bool WithProbability(double prob) { return RandomDouble() < prob; }
 
-    inline static constexpr double s        = 1.0;
-    inline static constexpr double mu       = 1.0;
-    inline static constexpr double Delta_t  = 1.0;
-    inline static constexpr double rmin     = 1.0;
-    inline static constexpr int    tinterval = 24;
+    static const double s;
+    static const double mu;
+    static const double Delta_t;
+    static const double rmin;
+    static const int tinterval;
 };

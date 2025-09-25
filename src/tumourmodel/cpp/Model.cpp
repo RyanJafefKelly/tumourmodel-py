@@ -122,3 +122,41 @@ std::vector<double> FullSimulation_seeded(double p0, double psc, int dmax, int g
     delete pancreas;
     return Tvolume;
 }
+
+
+std::vector<double> FullSimulation_biphasic_seeded(double p0_1, double psc_1, int dmax_1, int gage_1, int page,
+                                                   double p0_2, double psc_2, int dmax_2, int gage_2, int tau_days,
+                                                   double startVolume, int simtime, std::uint64_t seed)
+{
+    if (tau_days < 0) tau_days = 0;
+    if (tau_days > simtime) tau_days = simtime;
+
+    Params* parameters = new Params(p0_1, psc_1, dmax_1, gage_1, page, seed);
+    std::vector<Cell*> empty;
+    Pancreas* pancreas = new Pancreas(empty, parameters);
+    pancreas->CreateInitialTumour();
+
+    // grow to start volume
+    double volume = 0; int days1 = 0;
+    while (volume < startVolume && days1 < 200)
+        volume = pancreas->SimulateOneDay(days1++);
+
+    std::vector<double> Tvolume(simtime);
+
+    // phase 1
+    int d = 0;
+    for (; d < tau_days && d < simtime; ++d)
+        Tvolume[d] = pancreas->SimulateOneDay(1);
+
+    // switch to phase 2 (deterministic new stream; use a derived seed)
+    std::uint64_t seed2 = seed ^ 0x9E3779B97F4A7C15ULL; // golden ratio mix
+    pancreas->UpdateParameters(new Params(p0_2, psc_2, dmax_2, gage_2, page, seed2));
+
+    // phase 2
+    for (; d < simtime; ++d)
+        Tvolume[d] = pancreas->SimulateOneDay(1);
+
+    delete parameters;
+    delete pancreas;
+    return Tvolume;
+}

@@ -5,7 +5,9 @@ description = "Py bindings for the TumourModel"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{ name = "Ryan Kelly" }]
-dependencies = []
+dependencies = [
+    "numpy>=2.2.6",
+]
 
 [build-system]
 requires = ["scikit-build-core>=0.10", "pybind11>=2.12", "numpy>=2"]

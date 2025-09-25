@@ -1,4 +1,3 @@
-from ._core import simulate
+from ._core import simulate, simulate_biphasic
 
-__all__ = ["simulate"]
-__version__ = "0.0.1"
+__all__ = ["simulate", "simulate_biphasic"]
